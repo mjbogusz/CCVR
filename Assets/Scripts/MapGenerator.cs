@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
-	
+
 	// Use this for initialization
 	void Start () {
 		float wallHeight = 2.5f;
@@ -24,7 +24,7 @@ public class MapGenerator : MonoBehaviour {
 			Vector3 wallPosition = new Vector3((p1.x + p2.x) / 2, wallHeight / 2, (p1.y + p2.y) / 2);
 			float wallLength = Mathf.Sqrt((p1.x + p2.x) * (p1.x + p2.x) + (p1.y + p2.y) * (p1.y + p2.y));
 			float wallRotation = Mathf.Atan2(p2.x - p1.x, p2.y - p1.y) * 180 / Mathf.PI;
-			
+
 			GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			wall.name = "Wall" + i.ToString();
 			wall.transform.SetParent(map.transform);
@@ -44,9 +44,9 @@ public class MapGenerator : MonoBehaviour {
 		Transform ceilingLightTransform = map.transform.Find("Ceiling Light");
 		ceilingLightTransform.position = new Vector3(0f, wallHeight - 0.1f, 0f);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 }

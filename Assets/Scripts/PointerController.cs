@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PointerController : MonoBehaviour {
-	private static readonly float maxSpeed = 20f;
-	private static readonly float distanceAcceleration = 5f * Time.fixedDeltaTime;
+	private float maxSpeed = 20f;
+	private float distanceAcceleration = 5f;
 
 	private bool aimingMode = false;
 	private float angle = 0f;
@@ -12,8 +12,11 @@ public class PointerController : MonoBehaviour {
 	private float distance = 1f;
 
 	// Use this for initialization
-	void Start () {}
-	
+	void Start () {
+		maxSpeed *= Time.fixedDeltaTime;
+		distanceAcceleration *= Time.fixedDeltaTime;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		// Toggle aiming/movement mode

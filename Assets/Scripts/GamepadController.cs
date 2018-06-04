@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GamepadController : MonoBehaviour {
-	private static readonly float maxSpeed = 1.0f;
-	private static readonly float acceleration = 3.0f * Time.fixedDeltaTime;
+	private float maxSpeed = 1.0f;
+	private float acceleration = 3.0f;
 	private float speedX = 0f;
 	private float speedZ = 0f;
 	private bool movingMode = true;
 
 	// Use this for initialization
-	void Start () {}
-	
+	void Start () {
+		maxSpeed *= Time.fixedDeltaTime;
+		acceleration *= Time.fixedDeltaTime;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonUp("Fire3")) {
