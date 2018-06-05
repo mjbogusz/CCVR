@@ -48,18 +48,9 @@ public class GvrRecenterOnlyController : MonoBehaviour {
       return;
     }
 
-#if UNITY_EDITOR
-    // Compatibility for Instant Preview.
-    if (Gvr.Internal.InstantPreview.Instance != null &&
-      Gvr.Internal.InstantPreview.Instance.enabled &&
-      (GvrControllerInput.HomeButtonDown || GvrControllerInput.HomeButtonState)) {
-      return;
-    }
-#else  // !UNITY_EDITOR
     if (GvrControllerInput.HomeButtonDown || GvrControllerInput.HomeButtonState) {
       return;
     }
-#endif  // UNITY_EDITOR
 
     yawCorrection = GetYawCorrection();
   }
