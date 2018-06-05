@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class GamepadController : MonoBehaviour {
 	private float speedMax = 5.0f;
-	private float timeToFullSpeed = 0.5f;
 	private float accelerationMax = 3.0f;
-	//private float accelerationX = 0f;
-	//private float accelerationY = 0f;
 	private Vector3 speed = new Vector3(0f, 0f, 0f);
 	private bool movingMode = true;
 

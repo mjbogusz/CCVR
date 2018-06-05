@@ -9,9 +9,12 @@ public class MapGenerator : MonoBehaviour {
 		float wallHeight = 2.5f;
 		Vector2[] wallPoints = {
 			new Vector2(5.0f, 5.0f),
-			new Vector2(5.0f, -5.0f),
+			new Vector2(-3.0f, 5.0f),
+			new Vector2(-5.0f, 3.0f),
 			new Vector2(-5.0f, -5.0f),
-			new Vector2(-5.0f, 5.0f),
+			new Vector2(3.0f, -5.0f),
+			new Vector2(3.0f, -3.0f),
+			new Vector2(5.0f, -3.0f),
 		};
 
 		GameObject map = GameObject.Find("map");
@@ -22,7 +25,7 @@ public class MapGenerator : MonoBehaviour {
 			Vector2 p2 = wallPoints[(i + 1) % wallPoints.Length];
 
 			Vector3 wallPosition = new Vector3((p1.x + p2.x) / 2, wallHeight / 2, (p1.y + p2.y) / 2);
-			float wallLength = Mathf.Sqrt((p1.x + p2.x) * (p1.x + p2.x) + (p1.y + p2.y) * (p1.y + p2.y));
+			float wallLength = Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
 			float wallRotation = Mathf.Atan2(p2.x - p1.x, p2.y - p1.y) * 180 / Mathf.PI;
 
 			GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
