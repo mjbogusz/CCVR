@@ -16,6 +16,13 @@ public class GamepadController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if (Input.touchCount > 0) {
+			UnityEngine.XR.InputTracking.Recenter();
+			#if UNITY_EDITOR
+				GvrEditorEmulator.Instance.Recenter();
+			#endif
+		}
+
 		if (Input.GetButtonUp("Fire3")) {
 			movingMode = !movingMode;
 		}
