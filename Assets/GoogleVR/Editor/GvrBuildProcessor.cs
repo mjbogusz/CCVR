@@ -35,7 +35,7 @@ using UnityEditor.Build.Reporting;
 #endif
 
 // Notifies users if they build for Android or iOS without Cardboard or Daydream enabled.
-class GvrBuildProcessor : IPreprocessBuild, IPostprocessBuild {
+class GvrBuildProcessor : IPreprocessBuildWithReport, IPostprocessBuildWithReport {
   private const string VR_SETTINGS_NOT_ENABLED_ERROR_MESSAGE_FORMAT =
     "To use the Google VR SDK on {0}, 'Player Settings > Virtual Reality Supported' setting must be checked.\n" +
     "Please fix this setting and rebuild your app.";
