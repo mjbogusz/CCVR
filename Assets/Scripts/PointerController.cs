@@ -11,6 +11,9 @@ public class PointerController : MonoBehaviour {
 	private float height = 1f;
 	private float distance = 1f;
 
+	public GameObject dataCanvas;
+	public GameObject player;
+
 	// Use this for initialization
 	void Start () {
 		maxSpeed *= Time.fixedDeltaTime;
@@ -19,14 +22,26 @@ public class PointerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		// Toggle aiming/movement mode
-		if (Input.GetButtonUp("Fire4")) {
-			aimingMode = !aimingMode;
+		// Display data canvas if fire4 is pressed
+		if (Input.GetButton("Fire4")) {
+			// Set canvas to visible
+			dataCanvas.SetActive(true);
+
+			// Rotate canvas to be perpendicular to player position
+			Vector3 playerPosition = player.transform.position;
+			Vector3 pointerPosition = transform.position;
+			float canvasRotation = Mathf.Atan2(pointerPosition.x - playerPosition.x, pointerPosition.z - playerPosition.z) * 180 / Mathf.PI;
+			dataCanvas.transform.eulerAngles = Quaternion.Euler(0f, canvasRotation, 0f).eulerAngles;
+
+			// End - don't allow other actions as this button also sends "fire2"...
+			return;
+		} else {
+			dataCanvas.SetActive(false);
 		}
 
-		// Display data readouts
-		if (Input.GetButton("Fire0")) {
-			///TODO: display readouts
+		// Toggle aiming/movement mode
+		if (Input.GetButtonUp("Fire5")) {
+			aimingMode = !aimingMode;
 		}
 
 		if (!aimingMode) {
