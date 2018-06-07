@@ -8,7 +8,7 @@ public class PointerController : MonoBehaviour {
 	public GameObject playerCamera;
 
 	private bool aimingMode = false;
-	private float speedMax = 20f;
+	private float speedMax = 2f;
 	private float accelerationMax = 5f;
 	private Vector3 speed;
 
@@ -60,10 +60,10 @@ public class PointerController : MonoBehaviour {
 		float horizontal = Input.GetAxis("Horizontal");
 		float distanceChange = 0f;
 		if (Input.GetButton("Fire1")) {
-			distanceChange += 1f;
+			distanceChange += 0.5f;
 		}
 		if (Input.GetButton("Fire2")) {
-			distanceChange -= 1f;
+			distanceChange -= 0.5f;
 		}
 
 		Vector3 speedTarget = new Vector3(horizontal, vertical, distanceChange);
