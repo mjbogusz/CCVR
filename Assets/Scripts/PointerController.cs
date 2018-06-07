@@ -1,37 +1,38 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PointerController : MonoBehaviour {
-	private float maxSpeed = 20f;
-	private float distanceAcceleration = 5f;
-
-	private bool aimingMode = false;
-	private float angle = 0f;
-	private float height = 1f;
-	private float distance = 1f;
-
 	public GameObject dataCanvas;
 	public GameObject player;
+	public GameObject playerCamera;
+
+	private bool aimingMode = false;
+	private float speedMax = 20f;
+	private float accelerationMax = 5f;
+	private Vector3 speed;
 
 	// Use this for initialization
 	void Start () {
-		maxSpeed *= Time.fixedDeltaTime;
-		distanceAcceleration *= Time.fixedDeltaTime;
+		speedMax *= Time.fixedDeltaTime;
+		accelerationMax *= Time.fixedDeltaTime;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		// Display data canvas if fire4 is pressed
+		// Rotate canvas to be perpendicular to player position
+		Vector3 playerPosition = player.transform.position;
+		Vector3 pointerPosition = transform.position;
+		float canvasRotation = Mathf.Atan2(pointerPosition.x - playerPosition.x, pointerPosition.z - playerPosition.z) * 180 / Mathf.PI;
+		transform.eulerAngles = Quaternion.Euler(0f, canvasRotation, 0f).eulerAngles;
+
+		// Display data canvas if fire4 (upper trigger) is pressed
 		if (Input.GetButton("Fire4")) {
 			// Set canvas to visible
 			dataCanvas.SetActive(true);
 
-			// Rotate canvas to be perpendicular to player position
-			Vector3 playerPosition = player.transform.position;
-			Vector3 pointerPosition = transform.position;
-			float canvasRotation = Mathf.Atan2(pointerPosition.x - playerPosition.x, pointerPosition.z - playerPosition.z) * 180 / Mathf.PI;
-			dataCanvas.transform.eulerAngles = Quaternion.Euler(0f, canvasRotation, 0f).eulerAngles;
+			// Stop the pointer
+			speed = new Vector3(0f, 0f, 0f);
 
 			// End - don't allow other actions as this button also sends "fire2"...
 			return;
@@ -39,25 +40,23 @@ public class PointerController : MonoBehaviour {
 			dataCanvas.SetActive(false);
 		}
 
-		// Toggle aiming/movement mode
+		// Toggle aiming/movement mode (fire5 / lower trigger)
 		if (Input.GetButtonUp("Fire5")) {
 			aimingMode = !aimingMode;
 		}
-
 		if (!aimingMode) {
 			return;
 		}
 
-		// Reset pointer position
+		// Reset pointer position - fire3 / "D"
 		if (Input.GetButtonUp("Fire3")) {
-			angle = 0f;
-			height = 1f;
-			distance = 1f;
+			transform.position = player.transform.position + Quaternion.Euler(playerCamera.transform.eulerAngles) * new Vector3(0f, 0f, 1f);
 		}
 
 		// vertical (up/down): move up/down
-		float vertical = Input.GetAxis("Vertical");
 		// horizontal (left/right): rotate around camera
+		// distance: self-explanatory
+		float vertical = Input.GetAxis("Vertical");
 		float horizontal = Input.GetAxis("Horizontal");
 		float distanceChange = 0f;
 		if (Input.GetButton("Fire1")) {
@@ -67,7 +66,13 @@ public class PointerController : MonoBehaviour {
 			distanceChange -= 1f;
 		}
 
-		///TODO: find player position and camera angles
-		///TODO: apply changes
+		Vector3 speedTarget = new Vector3(horizontal, vertical, distanceChange);
+		Vector3 acceleration = (speedTarget - speed) * Time.fixedDeltaTime;
+		if (acceleration.magnitude > accelerationMax) {
+			acceleration *= (accelerationMax / acceleration.magnitude);
+		}
+
+		speed += acceleration;
+		transform.Translate(speed * speedMax);
 	}
 }
