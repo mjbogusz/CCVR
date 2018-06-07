@@ -20,11 +20,8 @@ public class PointerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		// Rotate canvas to be perpendicular to player position
-		Vector3 playerPosition = player.transform.position;
-		Vector3 pointerPosition = transform.position;
-		float canvasRotation = Mathf.Atan2(pointerPosition.x - playerPosition.x, pointerPosition.z - playerPosition.z) * 180 / Mathf.PI;
-		transform.eulerAngles = Quaternion.Euler(0f, canvasRotation, 0f).eulerAngles;
+		// Rotate canvas to be perpendicular to player/camera position
+		transform.rotation = playerCamera.transform.rotation;
 
 		// Display data canvas if fire4 (upper trigger) is pressed
 		if (Input.GetButton("Fire4")) {
