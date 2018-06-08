@@ -244,7 +244,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverURL: anteater.cf
   serverPort: 8085
-  serverSensorFilename: test.txt
+  serverSensorFilename: sensors.txt
   map: {fileID: 439414096}
   sensorMaterial: {fileID: 2100000, guid: 998d2fbde3edd4875b1ce4d7db702c00, type: 2}
   pointerText: {fileID: 248244794}
