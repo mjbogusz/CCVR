@@ -31,7 +31,7 @@ class CCVRRequestHandler(SimpleHTTPRequestHandler):
 			self.send_response(400, 'Bad type')
 
 		try:
-			dataFile = open('files/' + filename, 'w')
+			dataFile = open(filename, 'w')
 			dataFile.write(data.get('content')[0])
 			dataFile.close()
 
