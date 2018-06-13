@@ -4,19 +4,34 @@ using System.Globalization;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour {
-	public GameObject map;
+	public GameObject mapObject;
 	public Material wallMaterial;
 	public Material sensorMaterial;
+	public GameObject playerObject;
 
 	public string serverURL;
 	public int serverPort;
 	public string serverMapFilename;
 
+	public string updateInputButton;
+
 	private float wallHeight;
 	private List<Vector2> wallPoints;
 
+	void Start() {
+		StartCoroutine(UpdateMap());
+	}
+
+	// Update is called once per frame
+	void Update() {
+		// Update map
+		if (Input.GetButtonUp(updateInputButton)) {
+			StartCoroutine(UpdateMap());
+		}
+	}
+
 	// Use this for initialization
-	IEnumerator Start() {
+	IEnumerator UpdateMap() {
 		wallHeight = 0f;
 		wallPoints = new List<Vector2>();
 
@@ -75,7 +90,7 @@ public class MapGenerator : MonoBehaviour {
 
 			GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			wall.name = "Wall" + i.ToString();
-			wall.transform.SetParent(map.transform);
+			wall.transform.SetParent(mapObject.transform);
 			wall.transform.position = wallPosition;
 			wall.transform.localScale = new Vector3(0.01f, wallHeight, wallLength);
 			wall.transform.eulerAngles = new Vector3(0f, wallRotation, 0f);
@@ -86,13 +101,12 @@ public class MapGenerator : MonoBehaviour {
 			wallRenderer.material = wallMaterialScaled;
 		}
 
-		Transform ceilingTransform = map.transform.Find("Ceiling");
+		Transform ceilingTransform = mapObject.transform.Find("Ceiling");
 		ceilingTransform.position = new Vector3(0f, wallHeight, 0f);
 
-		Transform ceilingLightTransform = map.transform.Find("Ceiling Light");
+		Transform ceilingLightTransform = mapObject.transform.Find("Ceiling Light");
 		ceilingLightTransform.position = new Vector3(0f, wallHeight - 0.1f, 0f);
-	}
 
-	// Update is called once per frame
-	void Update () {}
+		playerObject.transform.position = new Vector3(0f, 1.8f, 0f);
+	}
 }

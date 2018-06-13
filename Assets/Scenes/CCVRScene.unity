@@ -229,8 +229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataCanvas: {fileID: 570712843}
-  player: {fileID: 907292807}
+  playerObject: {fileID: 907292807}
   playerCamera: {fileID: 959308587}
+  speedMax: 2
+  accelerationMax: 5
+  displayDataInputButton: JoyTriggerUp
+  movingModeInputButton: JoyTriggerLow
+  resetPointerInputButton: JoyButtonC
+  increasePointerDistanceInputButton: JoyButtonA
+  decreasePointerDistanceInputButton: JoyButtonB
 --- !u!114 &219478213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,12 +571,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8d0c49796f80a4a9fd502549bd8b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 439414096}
+  mapObject: {fileID: 439414096}
   wallMaterial: {fileID: 2100000, guid: a6fd4f279d44c1b4e9efdfdaedd69708, type: 2}
   sensorMaterial: {fileID: 2100000, guid: 998d2fbde3edd4875b1ce4d7db702c00, type: 2}
+  playerObject: {fileID: 907292807}
   serverURL: anteater.cf
   serverPort: 8085
   serverMapFilename: map.txt
+  updateInputButton: JoyButtonD
 --- !u!1 &443168568
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,6 +888,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c94f3bc2e7cae84a9f3f65d03db8537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedMax: 3
+  accelerationMax: 10
+  movingModeInputButton: JoyTriggerLow
+  mainCameraTransform: {fileID: 959308593}
 --- !u!1 &916693203
 GameObject:
   m_ObjectHideFlags: 0

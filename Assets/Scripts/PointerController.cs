@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class PointerController : MonoBehaviour {
 	public GameObject dataCanvas;
-	public GameObject player;
+	public GameObject playerObject;
 	public GameObject playerCamera;
 
+	public float speedMax;
+	public float accelerationMax;
+
+	public string displayDataInputButton;
+	public string movingModeInputButton;
+	public string resetPointerInputButton;
+	public string increasePointerDistanceInputButton;
+	public string decreasePointerDistanceInputButton;
+
 	private bool aimingMode = false;
-	private float speedMax = 2f;
-	private float accelerationMax = 5f;
 	private Vector3 speed;
 
 	// Use this for initialization
@@ -23,8 +30,8 @@ public class PointerController : MonoBehaviour {
 		// Rotate canvas to be perpendicular to player/camera position
 		transform.rotation = playerCamera.transform.rotation;
 
-		// Display data canvas if fire4 (upper trigger) is pressed
-		if (Input.GetButton("Fire4")) {
+		// Display data canvas if upper trigger is pressed
+		if (Input.GetButton(displayDataInputButton)) {
 			// Set canvas to visible
 			dataCanvas.SetActive(true);
 
@@ -37,17 +44,17 @@ public class PointerController : MonoBehaviour {
 			dataCanvas.SetActive(false);
 		}
 
-		// Toggle aiming/movement mode (fire5 / lower trigger)
-		if (Input.GetButtonUp("Fire5")) {
+		// Toggle aiming/movement mode (lower trigger)
+		if (Input.GetButtonUp(movingModeInputButton)) {
 			aimingMode = !aimingMode;
 		}
 		if (!aimingMode) {
 			return;
 		}
 
-		// Reset pointer position - fire3 / "D"
-		if (Input.GetButtonUp("Fire3")) {
-			transform.position = player.transform.position + Quaternion.Euler(playerCamera.transform.eulerAngles) * new Vector3(0f, 0f, 1f);
+		// Reset pointer position
+		if (Input.GetButtonUp(resetPointerInputButton)) {
+			transform.position = playerObject.transform.position + Quaternion.Euler(playerCamera.transform.eulerAngles) * new Vector3(0f, 0f, 1f);
 		}
 
 		// vertical (up/down): move up/down
@@ -56,11 +63,11 @@ public class PointerController : MonoBehaviour {
 		float vertical = Input.GetAxis("Vertical");
 		float horizontal = Input.GetAxis("Horizontal");
 		float distanceChange = 0f;
-		if (Input.GetButton("Fire1")) {
-			distanceChange += 0.5f;
+		if (Input.GetButton(increasePointerDistanceInputButton)) {
+			distanceChange += 1f;
 		}
-		if (Input.GetButton("Fire2")) {
-			distanceChange -= 0.5f;
+		if (Input.GetButton(decreasePointerDistanceInputButton)) {
+			distanceChange -= 1f;
 		}
 
 		Vector3 speedTarget = new Vector3(horizontal, vertical, distanceChange);

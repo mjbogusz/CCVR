@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GamepadController : MonoBehaviour {
-	private float speedMax = 3.0f;
-	private float accelerationMax = 10.0f;
+	public float speedMax;
+	public float accelerationMax;
+	public string movingModeInputButton;
+
+	public Transform mainCameraTransform;
+
 	private Vector3 speed = new Vector3(0f, 0f, 0f);
 	private bool movingMode = true;
 
@@ -23,7 +27,7 @@ public class GamepadController : MonoBehaviour {
 			#endif
 		}
 
-		if (Input.GetButtonUp("Fire5")) {
+		if (Input.GetButtonUp(movingModeInputButton)) {
 			movingMode = !movingMode;
 		}
 
@@ -33,7 +37,7 @@ public class GamepadController : MonoBehaviour {
 			float vertical = Input.GetAxis("Vertical");
 			float horizontal = Input.GetAxis("Horizontal");
 
-			float cameraAngle = transform.Find("mainCamera").eulerAngles.y;
+			float cameraAngle = mainCameraTransform.eulerAngles.y;
 			speedTarget = Quaternion.Euler(0, cameraAngle, 0) * new Vector3(horizontal, 0, vertical);
 		}
 
